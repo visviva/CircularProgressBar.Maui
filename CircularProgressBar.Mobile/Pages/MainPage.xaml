@@ -3,19 +3,85 @@
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   x:Class="CircularProgressBar.Mobile.MainPage"
+  xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
   xmlns:vm="clr-namespace:CircularProgressBar.Mobile.ViewModels"
   x:DataType="vm:MainViewModel"
   xmlns:control="clr-namespace:CircularProgressBar.Mobile.Controls"
 >
-  <GraphicsView
-    x:Name="GraphicsView"
-    HeightRequest="400"
-    WidthRequest="400"
-    HorizontalOptions="Center"
-    VerticalOptions="Center"
-  >
-    <GraphicsView.Drawable>
-      <control:CircularProgressBarDrawable />
-    </GraphicsView.Drawable>
-  </GraphicsView>
+  <ContentPage.Resources>
+    <toolkit:DoubleToIntConverter x:Key="DoubleToIntConverter" />
+  </ContentPage.Resources>
+
+  <VerticalStackLayout>
+    <control:CircularProgressBarView
+      x:Name="CircularProgressBar"
+      NumberOfCircles="{Binding Value, Source={x:Reference CircleSlider}, Converter={StaticResource DoubleToIntConverter}}"
+      InitialRadius="{Binding Value, Source={x:Reference InitialRadiusSlider}}"
+      RadiusIncrement="{Binding Value, Source={x:Reference RadiusIncrementSlider}}"
+    />
+
+    <Grid ColumnDefinitions="150,*,*" ColumnSpacing="15" Margin="20">
+      <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0">
+        <Label.Text>
+          <MultiBinding StringFormat="Center: ({0}, {1})">
+            <Binding Source="{x:Reference EntryX}" Path="Text" TargetNullValue="0" />
+            <Binding Source="{x:Reference EntryY}" Path="Text" TargetNullValue="0" />
+          </MultiBinding>
+        </Label.Text>
+      </Label>
+      <Entry x:Name="EntryX" Grid.Column="1" Placeholder="X" />
+      <Entry x:Name="EntryY" Grid.Column="2" Placeholder="Y" />
+    </Grid>
+
+    <Grid ColumnDefinitions="150,*" ColumnSpacing="15" Margin="20">
+      <Label
+        Text="{Binding Value, Source={x:Reference CircleSlider}, StringFormat='Number of Circles: {0:F0}'}"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        Grid.Column="0"
+      />
+      <Slider
+        x:Name="CircleSlider"
+        Minimum="0"
+        Maximum="110"
+        Value="20"
+        Grid.Column="1"
+        VerticalOptions="Center"
+      />
+    </Grid>
+
+    <Grid ColumnDefinitions="150,*" ColumnSpacing="15" Margin="20">
+      <Label
+        Text="{Binding Value, Source={x:Reference InitialRadiusSlider}, StringFormat='Initial Radius: {0:F0}'}"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        Grid.Column="0"
+      />
+      <Slider
+        x:Name="InitialRadiusSlider"
+        Minimum="1"
+        Maximum="20"
+        Value="5"
+        Grid.Column="1"
+        VerticalOptions="Center"
+      />
+    </Grid>
+
+    <Grid ColumnDefinitions="150,*" ColumnSpacing="15" Margin="20">
+      <Label
+        Text="{Binding Value, Source={x:Reference RadiusIncrementSlider}, StringFormat='Radius Increment: {0:F0}'}"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        Grid.Column="0"
+      />
+      <Slider
+        x:Name="RadiusIncrementSlider"
+        Minimum="1"
+        Maximum="20"
+        Value="5"
+        Grid.Column="1"
+        VerticalOptions="Center"
+      />
+    </Grid>
+  </VerticalStackLayout>
 </ContentPage>
