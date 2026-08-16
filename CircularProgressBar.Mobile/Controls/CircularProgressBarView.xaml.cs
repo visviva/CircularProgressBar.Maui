@@ -1,18 +1,45 @@
 namespace CircularProgressBar.Mobile.Controls;
 
+[ContentProperty(nameof(CenterContent))]
 public partial class CircularProgressBarView : ContentView
 {
-    public static readonly BindableProperty CenterTextProperty = BindableProperty.Create(
-        nameof(CenterText),
-        typeof(string),
-        typeof(CircularProgressBarView),
-        string.Empty
+    public static readonly BindableProperty CenterContentProperty = BindableProperty.Create(
+        nameof(CenterContent),
+        typeof(View),
+        typeof(CircularProgressBarView)
     );
-    public string CenterText
+
+    public View? CenterContent
     {
-        get => (string)GetValue(CenterTextProperty);
-        set => SetValue(CenterTextProperty, value);
+        get => (View?)GetValue(CenterContentProperty);
+        set => SetValue(CenterContentProperty, value);
     }
+
+    private static readonly BindablePropertyKey CenterContentMaxWidthPropertyKey =
+        BindableProperty.CreateReadOnly(
+            nameof(CenterContentMaxWidth),
+            typeof(double),
+            typeof(CircularProgressBarView),
+            250.0
+        );
+
+    public static readonly BindableProperty CenterContentMaxWidthProperty =
+        CenterContentMaxWidthPropertyKey.BindableProperty;
+
+    public double CenterContentMaxWidth => (double)GetValue(CenterContentMaxWidthProperty);
+
+    private static readonly BindablePropertyKey CenterContentMaxHeightPropertyKey =
+        BindableProperty.CreateReadOnly(
+            nameof(CenterContentMaxHeight),
+            typeof(double),
+            typeof(CircularProgressBarView),
+            250.0
+        );
+
+    public static readonly BindableProperty CenterContentMaxHeightProperty =
+        CenterContentMaxHeightPropertyKey.BindableProperty;
+
+    public double CenterContentMaxHeight => (double)GetValue(CenterContentMaxHeightProperty);
 
     public static readonly BindableProperty NumberOfCirclesProperty = BindableProperty.Create(
         nameof(NumberOfCircles),

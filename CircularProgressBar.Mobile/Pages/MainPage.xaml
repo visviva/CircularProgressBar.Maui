@@ -18,8 +18,15 @@
       NumberOfCircles="{Binding Value, Source={x:Reference CircleSlider}, Converter={StaticResource DoubleToIntConverter}}"
       InitialRadius="{Binding Value, Source={x:Reference InitialRadiusSlider}}"
       RadiusIncrement="{Binding Value, Source={x:Reference RadiusIncrementSlider}}"
-      CenterText="{Binding Text, Source={x:Reference CenterTextEntry}}"
-    />
+    >
+      <VerticalStackLayout>
+        <Label
+          Text="{Binding Text, Source={x:Reference CenterTextEntry}}"
+          FontSize="20"
+          TextColor="Pink"
+        />
+      </VerticalStackLayout>
+    </control:CircularProgressBarView>
 
     <Grid ColumnDefinitions="150,*,*" ColumnSpacing="15" Margin="20">
       <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0">

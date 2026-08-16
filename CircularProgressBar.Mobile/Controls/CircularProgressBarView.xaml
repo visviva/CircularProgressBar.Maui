@@ -7,25 +7,31 @@
   xmlns:control="clr-namespace:CircularProgressBar.Mobile.Controls"
   x:DataType="control:CircularProgressBarView"
 >
-  <Grid>
-    <GraphicsView
-      x:Name="GraphicsView"
-      HeightRequest="400"
-      WidthRequest="400"
-      HorizontalOptions="Center"
-      VerticalOptions="Center"
-      ZIndex="0"
-    />
-    <Label
-      x:Name="CenterLabel"
-      Text="{Binding CenterText, Source={x:Reference this}}"
-      HorizontalOptions="Center"
-      VerticalOptions="Center"
-      FontSize="40"
-      TextColor="Pink"
-      HeightRequest="250"
-      WidthRequest="250"
-      ZIndex="1"
-    />
-  </Grid>
+  <ContentView.Content>
+    <Grid>
+      <GraphicsView
+        x:Name="GraphicsView"
+        HeightRequest="400"
+        WidthRequest="400"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        ZIndex="0"
+      />
+
+      <Grid
+        HeightRequest="{Binding CenterContentMaxHeight, Source={x:Reference this}}"
+        WidthRequest="{Binding CenterContentMaxWidth, Source={x:Reference this}}"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        IsClippedToBounds="True"
+        ZIndex="1"
+      >
+        <ContentView
+          Content="{Binding CenterContent, Source={x:Reference this}}"
+          HorizontalOptions="Fill"
+          VerticalOptions="Fill"
+        />
+      </Grid>
+    </Grid>
+  </ContentView.Content>
 </ContentView>
