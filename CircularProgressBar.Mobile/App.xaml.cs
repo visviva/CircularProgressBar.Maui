@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace CircularProgressBar.Mobile
+﻿namespace CircularProgressBar.Mobile
 {
     public partial class App : Application
     {
@@ -11,7 +9,14 @@ namespace CircularProgressBar.Mobile
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            var window = new Window(new AppShell());
+
+#if WINDOWS
+            window.Width = 450;
+            window.Height = 800;
+#endif
+
+            return window;
         }
     }
 }
