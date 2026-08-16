@@ -2,6 +2,18 @@ namespace CircularProgressBar.Mobile.Controls;
 
 public partial class CircularProgressBarView : ContentView
 {
+    public static readonly BindableProperty CenterTextProperty = BindableProperty.Create(
+        nameof(CenterText),
+        typeof(string),
+        typeof(CircularProgressBarView),
+        string.Empty
+    );
+    public string CenterText
+    {
+        get => (string)GetValue(CenterTextProperty);
+        set => SetValue(CenterTextProperty, value);
+    }
+
     public static readonly BindableProperty NumberOfCirclesProperty = BindableProperty.Create(
         nameof(NumberOfCircles),
         typeof(int),

@@ -13,7 +13,7 @@
 
 #if WINDOWS
             window.Width = 450;
-            window.Height = 800;
+            window.Height = 900;
 #endif
 
             return window;
