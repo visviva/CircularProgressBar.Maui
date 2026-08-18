@@ -6,5 +6,7 @@
   x:Class="CircularProgressBar.Mobile.TemplatedControlPage"
   Title="TemplatedControlPage"
 >
-  <control:SampleTemplateControl ControlTemplate="{StaticResource CardTemplate}" />
+  <control:SampleTemplateControl>
+    <Button Text="Click Me" />
+  </control:SampleTemplateControl>
 </ContentPage>

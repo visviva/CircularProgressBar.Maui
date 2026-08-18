@@ -18,5 +18,8 @@ public partial class SampleTemplateControl : ContentView
     public SampleTemplateControl()
     {
         InitializeComponent();
+
+        var theControlTemplate = Resources["CardTemplate"];
+        ControlTemplate = theControlTemplate as ControlTemplate;
     }
 }

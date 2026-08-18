@@ -7,7 +7,10 @@
   <ContentView.Resources>
     <ControlTemplate x:Key="CardTemplate">
       <Border Stroke="Gray" StrokeThickness="1" Padding="20" Margin="30">
-        <Label Text="{TemplateBinding Title}" HorizontalTextAlignment="Center" />
+        <VerticalStackLayout Spacing="20">
+          <Label Text="{TemplateBinding Title}" HorizontalTextAlignment="Center" />
+          <ContentPresenter />
+        </VerticalStackLayout>
       </Border>
     </ControlTemplate>
   </ContentView.Resources>
