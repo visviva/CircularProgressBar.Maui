@@ -9,7 +9,8 @@ A customizable double-ring circular progress control for .NET MAUI. It supports 
 and outer progress values, configurable ring geometry and colors, disabled-state opacity, and
 clipped content in the center of the rings.
 
-![CircularProgressBar.Maui demo](assets/example.png)
+<img width="473" height="770" alt="image" src="https://github.com/user-attachments/assets/71714c0e-e9a5-4d7f-b64d-11f01dc34f9e" />
+
 
 ## Features
 
