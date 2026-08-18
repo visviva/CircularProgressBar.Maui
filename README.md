@@ -85,7 +85,6 @@ All configurable values are bindable:
 | `DisabledOpacity` | `float` | `0.38` | Ring opacity when `IsEnabled` is `false`. |
 | `ContentDiameter` | `float` | Read-only | Diameter available to centered content after drawing. |
 
-The current control template uses a centered `400 × 400` drawing surface.
 
 ## Development
 
