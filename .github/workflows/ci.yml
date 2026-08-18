@@ -1,0 +1,107 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: "true"
+  DOTNET_NOLOGO: "true"
+  HUSKY: "0"
+  PROJECT: CircularProgressBar.Maui.Demo/CircularProgressBar.Maui.Demo.csproj
+  SOLUTION: CircularProgressBar.Maui.slnx
+
+jobs:
+  android:
+    name: Android (Ubuntu)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install MAUI workload
+        run: dotnet workload install maui-android
+
+      - name: Restore
+        run: dotnet restore $SOLUTION
+
+      - name: Build Android
+        run: >-
+          dotnet build $PROJECT
+          --framework net10.0-android
+          --no-restore
+          --verbosity minimal
+
+  windows:
+    name: Windows
+    runs-on: windows-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install MAUI workload
+        run: dotnet workload install maui
+
+      - name: Restore
+        run: dotnet restore $env:SOLUTION
+
+      - name: Build Windows
+        run: >-
+          dotnet build $env:PROJECT
+          --framework net10.0-windows10.0.19041.0
+          --no-restore
+          --verbosity minimal
+
+  apple:
+    name: Apple platforms (macOS)
+    runs-on: macos-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Install MAUI workload
+        run: dotnet workload install maui
+
+      - name: Select iOS simulator runtime
+        run: |
+          if [ "$(uname -m)" = "arm64" ]; then
+            echo "IOS_SIMULATOR_RID=iossimulator-arm64" >> "$GITHUB_ENV"
+          else
+            echo "IOS_SIMULATOR_RID=iossimulator-x64" >> "$GITHUB_ENV"
+          fi
+
+      - name: Restore
+        run: dotnet restore $SOLUTION
+
+      - name: Build iOS simulator
+        run: >-
+          dotnet build $PROJECT
+          --framework net10.0-ios
+          --runtime $IOS_SIMULATOR_RID
+          --verbosity minimal
+
+      - name: Build Mac Catalyst
+        run: >-
+          dotnet build $PROJECT
+          --framework net10.0-maccatalyst
+          --verbosity minimal
