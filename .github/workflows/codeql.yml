@@ -20,7 +20,7 @@ env:
   DOTNET_NOLOGO: "true"
   HUSKY: "0"
   PROJECT: CircularProgressBar.Maui.Demo/CircularProgressBar.Maui.Demo.csproj
-  SOLUTION: CircularProgressBar.slnx
+  SOLUTION: CircularProgressBar.Maui.slnx
 
 jobs:
   analyze:
