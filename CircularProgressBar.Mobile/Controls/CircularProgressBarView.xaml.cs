@@ -1,6 +1,5 @@
 namespace CircularProgressBar.Mobile.Controls;
 
-[ContentProperty(nameof(CenterContent))]
 public partial class CircularProgressBarView : ContentView
 {
     public static readonly BindableProperty CenterContentProperty = BindableProperty.Create(
@@ -102,7 +101,16 @@ public partial class CircularProgressBarView : ContentView
     public CircularProgressBarView()
     {
         InitializeComponent();
-        GraphicsView.Drawable = _circularProgressBarDrawable;
+        var theControlTemplate = Resources["CircularProgressBarTemplate"];
+        ControlTemplate = theControlTemplate as ControlTemplate;
+    }
+
+    protected override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
+
+        var graphicsView = GetTemplateChild("GraphicsView") as GraphicsView;
+        graphicsView?.Drawable = _circularProgressBarDrawable;
         UpdateDrawable();
     }
 
@@ -125,6 +133,7 @@ public partial class CircularProgressBarView : ContentView
         _circularProgressBarDrawable.RadiusIncrement = RadiusIncrement;
         _circularProgressBarDrawable.InitialRadius = InitialRadius;
         _circularProgressBarDrawable.Center = Center;
-        GraphicsView?.Invalidate();
+        var graphicsView = GetTemplateChild("GraphicsView") as GraphicsView;
+        graphicsView?.Invalidate();
     }
 }

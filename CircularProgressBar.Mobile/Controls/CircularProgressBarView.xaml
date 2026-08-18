@@ -2,36 +2,31 @@
 <ContentView
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  x:Name="this"
   x:Class="CircularProgressBar.Mobile.Controls.CircularProgressBarView"
-  xmlns:control="clr-namespace:CircularProgressBar.Mobile.Controls"
-  x:DataType="control:CircularProgressBarView"
 >
-  <ContentView.Content>
-    <Grid>
-      <GraphicsView
-        x:Name="GraphicsView"
-        HeightRequest="400"
-        WidthRequest="400"
-        HorizontalOptions="Center"
-        VerticalOptions="Center"
-        ZIndex="0"
-      />
-
-      <Grid
-        HeightRequest="{Binding CenterContentMaxHeight, Source={x:Reference this}}"
-        WidthRequest="{Binding CenterContentMaxWidth, Source={x:Reference this}}"
-        HorizontalOptions="Center"
-        VerticalOptions="Center"
-        IsClippedToBounds="True"
-        ZIndex="1"
-      >
-        <ContentView
-          Content="{Binding CenterContent, Source={x:Reference this}}"
-          HorizontalOptions="Fill"
-          VerticalOptions="Fill"
+  <ContentView.Resources>
+    <ControlTemplate x:Key="CircularProgressBarTemplate">
+      <Grid>
+        <GraphicsView
+          x:Name="GraphicsView"
+          HeightRequest="400"
+          WidthRequest="400"
+          HorizontalOptions="Center"
+          VerticalOptions="Center"
+          ZIndex="0"
         />
+
+        <Grid
+          HeightRequest="{TemplateBinding CenterContentMaxHeight}"
+          WidthRequest="{TemplateBinding CenterContentMaxWidth}"
+          HorizontalOptions="Center"
+          VerticalOptions="Center"
+          IsClippedToBounds="True"
+          ZIndex="1"
+        >
+          <ContentPresenter />
+        </Grid>
       </Grid>
-    </Grid>
-  </ContentView.Content>
+    </ControlTemplate>
+  </ContentView.Resources>
 </ContentView>

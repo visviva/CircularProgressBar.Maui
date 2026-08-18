@@ -8,7 +8,7 @@
 >
   <ShellContent
     Title="Circular Progress Bar Example"
-    ContentTemplate="{DataTemplate local:TemplatedControlPage}"
+    ContentTemplate="{DataTemplate local:MainPage}"
     Route="MainPage"
   />
 </Shell>
