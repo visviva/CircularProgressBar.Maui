@@ -1,17 +1,17 @@
-namespace CircularProgressBar.Mobile.Controls;
+namespace CircularProgressBar.Maui;
 
-public partial class CircularProgressBarView : ContentView
+public partial class CircularProgressBar : ContentView
 {
     public static readonly BindableProperty CenterContentProperty = BindableProperty.Create(
         nameof(CenterContent),
         typeof(View),
-        typeof(CircularProgressBarView)
+        typeof(CircularProgressBar)
     );
 
     public static readonly BindableProperty RingThicknessProperty = BindableProperty.Create(
         nameof(RingThickness),
         typeof(float),
-        typeof(CircularProgressBarView),
+        typeof(CircularProgressBar),
         8.0f,
         propertyChanged: OnDrawablePropertyChanged
     );
@@ -19,7 +19,7 @@ public partial class CircularProgressBarView : ContentView
     public static readonly BindableProperty RingSpacingProperty = BindableProperty.Create(
         nameof(RingSpacing),
         typeof(float),
-        typeof(CircularProgressBarView),
+        typeof(CircularProgressBar),
         4.0f,
         propertyChanged: OnDrawablePropertyChanged
     );
@@ -27,7 +27,7 @@ public partial class CircularProgressBarView : ContentView
     public static readonly BindableProperty StartAngleProperty = BindableProperty.Create(
         nameof(StartAngle),
         typeof(float),
-        typeof(CircularProgressBarView),
+        typeof(CircularProgressBar),
         90.0f,
         propertyChanged: OnDrawablePropertyChanged
     );
@@ -35,7 +35,7 @@ public partial class CircularProgressBarView : ContentView
     public static readonly BindableProperty DisabledOpacityProperty = BindableProperty.Create(
         nameof(DisabledOpacity),
         typeof(float),
-        typeof(CircularProgressBarView),
+        typeof(CircularProgressBar),
         0.38f,
         propertyChanged: OnDrawablePropertyChanged
     );
@@ -43,7 +43,7 @@ public partial class CircularProgressBarView : ContentView
     public static readonly BindableProperty TrackColorProperty = BindableProperty.Create(
         nameof(TrackColor),
         typeof(Color),
-        typeof(CircularProgressBarView),
+        typeof(CircularProgressBar),
         Colors.DarkSlateGrey,
         propertyChanged: OnDrawablePropertyChanged
     );
@@ -51,7 +51,7 @@ public partial class CircularProgressBarView : ContentView
     public static readonly BindableProperty ProgressColorProperty = BindableProperty.Create(
         nameof(ProgressColor),
         typeof(Color),
-        typeof(CircularProgressBarView),
+        typeof(CircularProgressBar),
         Colors.DeepSkyBlue,
         propertyChanged: OnDrawablePropertyChanged
     );
@@ -59,7 +59,7 @@ public partial class CircularProgressBarView : ContentView
     public static readonly BindableProperty InnerProgressProperty = BindableProperty.Create(
         nameof(InnerProgress),
         typeof(float),
-        typeof(CircularProgressBarView),
+        typeof(CircularProgressBar),
         0.0f,
         propertyChanged: OnDrawablePropertyChanged
     );
@@ -67,7 +67,7 @@ public partial class CircularProgressBarView : ContentView
     public static readonly BindableProperty OuterProgressProperty = BindableProperty.Create(
         nameof(OuterProgress),
         typeof(float),
-        typeof(CircularProgressBarView),
+        typeof(CircularProgressBar),
         0.0f,
         propertyChanged: OnDrawablePropertyChanged
     );
@@ -76,7 +76,7 @@ public partial class CircularProgressBarView : ContentView
         BindableProperty.CreateReadOnly(
             nameof(ContentDiameter),
             typeof(float),
-            typeof(CircularProgressBarView),
+            typeof(CircularProgressBar),
             0.0f
         );
 
@@ -87,7 +87,7 @@ public partial class CircularProgressBarView : ContentView
         BindableProperty.CreateReadOnly(
             nameof(CenterContentMax),
             typeof(double),
-            typeof(CircularProgressBarView),
+            typeof(CircularProgressBar),
             0.0
         );
 
@@ -97,7 +97,7 @@ public partial class CircularProgressBarView : ContentView
     private readonly CircularProgressBarDrawable _drawable = new();
     private GraphicsView? _graphicsView;
 
-    public CircularProgressBarView()
+    public CircularProgressBar()
     {
         _drawable.ContentDiameterChanged += OnContentDiameterChanged;
         PropertyChanged += OnViewPropertyChanged;
@@ -183,7 +183,7 @@ public partial class CircularProgressBarView : ContentView
         object newValue
     )
     {
-        if (bindable is CircularProgressBarView view)
+        if (bindable is CircularProgressBar view)
         {
             view.UpdateDrawable();
         }
@@ -199,16 +199,15 @@ public partial class CircularProgressBarView : ContentView
             TrackColor,
             ProgressColor
         );
-        _drawable.RingProgress = new RingProgress(
-            InnerProgress,
-            OuterProgress,
-            IsEnabled
-        );
+        _drawable.RingProgress = new RingProgress(InnerProgress, OuterProgress, IsEnabled);
 
         _graphicsView?.Invalidate();
     }
 
-    private void OnViewPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void OnViewPropertyChanged(
+        object? sender,
+        System.ComponentModel.PropertyChangedEventArgs e
+    )
     {
         if (e.PropertyName == nameof(IsEnabled))
         {

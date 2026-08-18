@@ -1,3 +1,4 @@
 <Solution>
-  <Project Path="CircularProgressBar.Mobile/CircularProgressBar.Mobile.csproj" />
+  <Project Path="CircularProgressBar.Maui/CircularProgressBar.Maui.csproj" Id="b7a7578e-95c0-4ef4-927e-53f792cbd474" />
+  <Project Path="CircularProgressBar.Mobile/CircularProgressBar.Maui.Demo.csproj" />
 </Solution>

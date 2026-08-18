@@ -1,4 +1,4 @@
-namespace CircularProgressBar.Mobile.Controls;
+namespace CircularProgressBar.Maui;
 
 public record class RingProgress(float InnerProgress, float OuterProgress, bool IsEnabled);
 
