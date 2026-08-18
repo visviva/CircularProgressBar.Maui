@@ -8,119 +8,181 @@ public partial class CircularProgressBarView : ContentView
         typeof(CircularProgressBarView)
     );
 
+    public static readonly BindableProperty RingThicknessProperty = BindableProperty.Create(
+        nameof(RingThickness),
+        typeof(float),
+        typeof(CircularProgressBarView),
+        8.0f,
+        propertyChanged: OnDrawablePropertyChanged
+    );
+
+    public static readonly BindableProperty RingSpacingProperty = BindableProperty.Create(
+        nameof(RingSpacing),
+        typeof(float),
+        typeof(CircularProgressBarView),
+        4.0f,
+        propertyChanged: OnDrawablePropertyChanged
+    );
+
+    public static readonly BindableProperty StartAngleProperty = BindableProperty.Create(
+        nameof(StartAngle),
+        typeof(float),
+        typeof(CircularProgressBarView),
+        90.0f,
+        propertyChanged: OnDrawablePropertyChanged
+    );
+
+    public static readonly BindableProperty DisabledOpacityProperty = BindableProperty.Create(
+        nameof(DisabledOpacity),
+        typeof(float),
+        typeof(CircularProgressBarView),
+        0.38f,
+        propertyChanged: OnDrawablePropertyChanged
+    );
+
+    public static readonly BindableProperty TrackColorProperty = BindableProperty.Create(
+        nameof(TrackColor),
+        typeof(Color),
+        typeof(CircularProgressBarView),
+        Colors.DarkSlateGrey,
+        propertyChanged: OnDrawablePropertyChanged
+    );
+
+    public static readonly BindableProperty ProgressColorProperty = BindableProperty.Create(
+        nameof(ProgressColor),
+        typeof(Color),
+        typeof(CircularProgressBarView),
+        Colors.DeepSkyBlue,
+        propertyChanged: OnDrawablePropertyChanged
+    );
+
+    public static readonly BindableProperty InnerProgressProperty = BindableProperty.Create(
+        nameof(InnerProgress),
+        typeof(float),
+        typeof(CircularProgressBarView),
+        0.0f,
+        propertyChanged: OnDrawablePropertyChanged
+    );
+
+    public static readonly BindableProperty OuterProgressProperty = BindableProperty.Create(
+        nameof(OuterProgress),
+        typeof(float),
+        typeof(CircularProgressBarView),
+        0.0f,
+        propertyChanged: OnDrawablePropertyChanged
+    );
+
+    private static readonly BindablePropertyKey ContentDiameterPropertyKey =
+        BindableProperty.CreateReadOnly(
+            nameof(ContentDiameter),
+            typeof(float),
+            typeof(CircularProgressBarView),
+            0.0f
+        );
+
+    public static readonly BindableProperty ContentDiameterProperty =
+        ContentDiameterPropertyKey.BindableProperty;
+
+    private static readonly BindablePropertyKey CenterContentMaxPropertyKey =
+        BindableProperty.CreateReadOnly(
+            nameof(CenterContentMax),
+            typeof(double),
+            typeof(CircularProgressBarView),
+            0.0
+        );
+
+    public static readonly BindableProperty CenterContentMaxProperty =
+        CenterContentMaxPropertyKey.BindableProperty;
+
+    private readonly CircularProgressBarDrawable _drawable = new();
+    private GraphicsView? _graphicsView;
+
+    public CircularProgressBarView()
+    {
+        _drawable.ContentDiameterChanged += OnContentDiameterChanged;
+        PropertyChanged += OnViewPropertyChanged;
+
+        InitializeComponent();
+        ControlTemplate = Resources["CircularProgressBarTemplate"] as ControlTemplate;
+    }
+
     public View? CenterContent
     {
         get => (View?)GetValue(CenterContentProperty);
         set => SetValue(CenterContentProperty, value);
     }
 
-    private static readonly BindablePropertyKey CenterContentMaxWidthPropertyKey =
-        BindableProperty.CreateReadOnly(
-            nameof(CenterContentMaxWidth),
-            typeof(double),
-            typeof(CircularProgressBarView),
-            250.0
-        );
-
-    public static readonly BindableProperty CenterContentMaxWidthProperty =
-        CenterContentMaxWidthPropertyKey.BindableProperty;
-
-    public double CenterContentMaxWidth => (double)GetValue(CenterContentMaxWidthProperty);
-
-    private static readonly BindablePropertyKey CenterContentMaxHeightPropertyKey =
-        BindableProperty.CreateReadOnly(
-            nameof(CenterContentMaxHeight),
-            typeof(double),
-            typeof(CircularProgressBarView),
-            250.0
-        );
-
-    public static readonly BindableProperty CenterContentMaxHeightProperty =
-        CenterContentMaxHeightPropertyKey.BindableProperty;
-
-    public double CenterContentMaxHeight => (double)GetValue(CenterContentMaxHeightProperty);
-
-    public static readonly BindableProperty NumberOfCirclesProperty = BindableProperty.Create(
-        nameof(NumberOfCircles),
-        typeof(int),
-        typeof(CircularProgressBarView),
-        100,
-        propertyChanged: OnPropertyOfDrawableChanged
-    );
-
-    public static readonly BindableProperty InitialRadiusProperty = BindableProperty.Create(
-        nameof(InitialRadius),
-        typeof(double),
-        typeof(CircularProgressBarView),
-        5.0,
-        propertyChanged: OnPropertyOfDrawableChanged
-    );
-
-    public static readonly BindableProperty RadiusIncrementProperty = BindableProperty.Create(
-        nameof(RadiusIncrement),
-        typeof(double),
-        typeof(CircularProgressBarView),
-        5.0,
-        propertyChanged: OnPropertyOfDrawableChanged
-    );
-
-    public static readonly BindableProperty CenterProperty = BindableProperty.Create(
-        nameof(Center),
-        typeof(Point),
-        typeof(CircularProgressBarView),
-        new Point(10.0, 10.0),
-        propertyChanged: OnPropertyOfDrawableChanged
-    );
-
-    public Point Center
+    public float RingThickness
     {
-        get => (Point)GetValue(CenterProperty);
-        set => SetValue(CenterProperty, value);
+        get => (float)GetValue(RingThicknessProperty);
+        set => SetValue(RingThicknessProperty, value);
     }
 
-    public int NumberOfCircles
+    public float RingSpacing
     {
-        get => (int)GetValue(NumberOfCirclesProperty);
-        set => SetValue(NumberOfCirclesProperty, value);
+        get => (float)GetValue(RingSpacingProperty);
+        set => SetValue(RingSpacingProperty, value);
     }
 
-    public double InitialRadius
+    public float StartAngle
     {
-        get => (double)GetValue(InitialRadiusProperty);
-        set => SetValue(InitialRadiusProperty, value);
+        get => (float)GetValue(StartAngleProperty);
+        set => SetValue(StartAngleProperty, value);
     }
 
-    public double RadiusIncrement
+    public float DisabledOpacity
     {
-        get => (double)GetValue(RadiusIncrementProperty);
-        set => SetValue(RadiusIncrementProperty, value);
+        get => (float)GetValue(DisabledOpacityProperty);
+        set => SetValue(DisabledOpacityProperty, value);
     }
 
-    private readonly CircularProgressBarDrawable _circularProgressBarDrawable = new();
-
-    public CircularProgressBarView()
+    public Color TrackColor
     {
-        InitializeComponent();
-        var theControlTemplate = Resources["CircularProgressBarTemplate"];
-        ControlTemplate = theControlTemplate as ControlTemplate;
+        get => (Color)GetValue(TrackColorProperty);
+        set => SetValue(TrackColorProperty, value);
     }
+
+    public Color ProgressColor
+    {
+        get => (Color)GetValue(ProgressColorProperty);
+        set => SetValue(ProgressColorProperty, value);
+    }
+
+    public float InnerProgress
+    {
+        get => (float)GetValue(InnerProgressProperty);
+        set => SetValue(InnerProgressProperty, value);
+    }
+
+    public float OuterProgress
+    {
+        get => (float)GetValue(OuterProgressProperty);
+        set => SetValue(OuterProgressProperty, value);
+    }
+
+    public float ContentDiameter => (float)GetValue(ContentDiameterProperty);
+
+    public double CenterContentMax => (double)GetValue(CenterContentMaxProperty);
 
     protected override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
 
-        var graphicsView = GetTemplateChild("GraphicsView") as GraphicsView;
-        graphicsView?.Drawable = _circularProgressBarDrawable;
+        _graphicsView = GetTemplateChild("GraphicsView") as GraphicsView;
+        if (_graphicsView is not null)
+        {
+            _graphicsView.Drawable = _drawable;
+        }
+
         UpdateDrawable();
     }
 
-    private static void OnPropertyOfDrawableChanged(
+    private static void OnDrawablePropertyChanged(
         BindableObject bindable,
         object oldValue,
         object newValue
     )
     {
-        // Pattern matching verifies the runtime type and avoids an invalid cast.
         if (bindable is CircularProgressBarView view)
         {
             view.UpdateDrawable();
@@ -129,11 +191,37 @@ public partial class CircularProgressBarView : ContentView
 
     private void UpdateDrawable()
     {
-        _circularProgressBarDrawable.NumberOfCircles = NumberOfCircles;
-        _circularProgressBarDrawable.RadiusIncrement = RadiusIncrement;
-        _circularProgressBarDrawable.InitialRadius = InitialRadius;
-        _circularProgressBarDrawable.Center = Center;
-        var graphicsView = GetTemplateChild("GraphicsView") as GraphicsView;
-        graphicsView?.Invalidate();
+        _drawable.RingProperties = new RingProperties(
+            RingThickness,
+            RingSpacing,
+            StartAngle,
+            DisabledOpacity,
+            TrackColor,
+            ProgressColor
+        );
+        _drawable.RingProgress = new RingProgress(
+            InnerProgress,
+            OuterProgress,
+            IsEnabled
+        );
+
+        _graphicsView?.Invalidate();
+    }
+
+    private void OnViewPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(IsEnabled))
+        {
+            UpdateDrawable();
+        }
+    }
+
+    private void OnContentDiameterChanged(float contentDiameter)
+    {
+        Dispatcher.Dispatch(() =>
+        {
+            SetValue(ContentDiameterPropertyKey, contentDiameter);
+            SetValue(CenterContentMaxPropertyKey, (double)contentDiameter);
+        });
     }
 }

@@ -17,8 +17,8 @@
         />
 
         <Grid
-          HeightRequest="{TemplateBinding CenterContentMaxHeight}"
-          WidthRequest="{TemplateBinding CenterContentMaxWidth}"
+          HeightRequest="{TemplateBinding CenterContentMax}"
+          WidthRequest="{TemplateBinding CenterContentMax}"
           HorizontalOptions="Center"
           VerticalOptions="Center"
           IsClippedToBounds="True"

@@ -2,6 +2,7 @@
 using MaterialSymbols.Maui;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Shiny;
 
 namespace CircularProgressBar.Mobile
 {
@@ -14,6 +15,7 @@ namespace CircularProgressBar.Mobile
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
                 .UseMaterialSymbols()
+                .UseShinyControls()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

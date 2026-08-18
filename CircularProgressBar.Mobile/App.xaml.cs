@@ -12,8 +12,8 @@
             var window = new Window(new AppShell());
 
 #if WINDOWS
-            window.Width = 450;
-            window.Height = 900;
+            window.Width = 1000;
+            window.Height = 1100;
 #endif
 
             return window;
