@@ -9,10 +9,8 @@
       <Grid>
         <GraphicsView
           x:Name="GraphicsView"
-          HeightRequest="400"
-          WidthRequest="400"
-          HorizontalOptions="Center"
-          VerticalOptions="Center"
+          HorizontalOptions="Fill"
+          VerticalOptions="Fill"
           ZIndex="0"
         />
 

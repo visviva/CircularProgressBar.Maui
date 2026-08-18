@@ -23,6 +23,8 @@
         IsEnabled="{Binding IsProgressEnabled}"
         ContentDiameter="{Binding ContentDiameter, Mode=OneWayToSource}"
         HorizontalOptions="Center"
+        HeightRequest="400"
+        WidthRequest="400"
       >
         <Border Stroke="Gray" StrokeThickness="1">
           <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
